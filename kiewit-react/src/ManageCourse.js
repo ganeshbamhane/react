@@ -3,6 +3,7 @@ import { saveCourse } from "./api/courseApi";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { course } from "./propTypes";
+import TextInput from "./Shared/TextInput";
 
 function ManageCourse({ courses, loadCourses, match }) {
   const [course, setCourse] = useState({
@@ -58,46 +59,36 @@ function ManageCourse({ courses, loadCourses, match }) {
 
   return (
     <>
-      <h1>Manage Course</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <br />
-          <input
+      <center>
+        <h1>Manage Course</h1>
+        <form onSubmit={handleSubmit}>
+          <TextInput
+            label="Title"
             id="title"
-            type="text"
             name="title"
             onChange={handleChange}
             value={course.title}
           />
-        </div>
 
-        <div>
-          <label htmlFor="authorId">Author Id</label>
-          <br />
-          <input
+          <TextInput
+            label="Author Id"
             id="authorId"
-            type="text"
             name="authorId"
             onChange={handleChange}
             value={course.authorId || ""}
           />
-        </div>
 
-        <div>
-          <label htmlFor="category">Category</label>
-          <br />
-          <input
+          <TextInput
+            label="Category"
             id="category"
-            type="text"
             name="category"
             onChange={handleChange}
             value={course.category}
           />
-        </div>
-
-        <input type="submit" className="btn btn-primary" value="Save" />
-      </form>
+          <br />
+          <input type="submit" className="btn btn-primary" value="Save" />
+        </form>
+      </center>
     </>
   );
 }
