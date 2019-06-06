@@ -14,12 +14,17 @@ class ManageCourse extends React.Component {
     redirectToCoursesPage: false
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // 1. Read the URL
     // 2. If the URL has a slug, we know we're editing.
     // 3. Get the course info
-    const slug = this.props.match.params.slug;
+    debugger;
+    //const slug = this.props.match.params.slug;
+    const { slug } = this.props.match.params;
     if (slug) {
+      await this.props.loadCourses();
+      const course = this.props.courses.find(course => course.slug === slug);
+      this.setState({ course });
     }
   }
 
@@ -41,12 +46,13 @@ class ManageCourse extends React.Component {
   handleSubmit = event => {
     event.preventDefault(); // hey browser, don't post back.
     saveCourse(this.state.course).then(() => {
+      this.props.loadCourses();
       this.setState({ redirectToCoursesPage: true });
     });
   };
 
   render() {
-    if (this.state.redirectToCoursesPage) return <Redirect to="courses" />;
+    if (this.state.redirectToCoursesPage) return <Redirect to="/courses" />;
 
     return (
       <>

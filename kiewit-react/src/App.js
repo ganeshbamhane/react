@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Home from "./Home";
 import Nav from "./Nav";
 import Courses from "./Courses";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import ManageCourse from "./ManageCourse";
 import * as CourseApi from "./api/courseApi";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,7 +12,7 @@ const App = () => {
   const [courses, setCourses] = useState([]);
 
   function loadCourses() {
-    CourseApi.getCourses()
+    return CourseApi.getCourses()
       .then(courses => setCourses(courses))
       .catch(error => toast.error("loading failed: Error - " + error.message));
   }
@@ -31,28 +31,31 @@ const App = () => {
     <>
       <ToastContainer />
       <Nav />
-      <Route path="/" component={Home} exact />
-      <Route
-        path="/courses"
-        render={props => (
-          <Courses
-            loadCourses={loadCourses}
-            deleteCourse={deleteCourse}
-            courses={courses}
-            {...props}
-          />
-        )}
-      />
-      <Route
-        path="/course/:slug"
-        render={props => (
-          <ManageCourse
-            {...props}
-            loadCourses={loadCourses}
-            courses={courses}
-          />
-        )}
-      />
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route
+          path="/courses"
+          render={props => (
+            <Courses
+              loadCourses={loadCourses}
+              deleteCourse={deleteCourse}
+              courses={courses}
+              {...props}
+            />
+          )}
+        />
+        <Route
+          path="/course/:slug?"
+          render={props => (
+            <ManageCourse
+              {...props}
+              loadCourses={loadCourses}
+              courses={courses}
+            />
+          )}
+        />
+        )} />
+      </Switch>
     </>
   );
 };
