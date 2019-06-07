@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextInput = ({ id, label, name, onChange, value }) => {
+const TextInput = ({ id, label, name, onChange, value, error }) => {
   return (
-    <div>
+    <div className="form-group">
       <label htmlFor={id}>{label}</label>
       <br />
       <input
@@ -13,6 +13,7 @@ const TextInput = ({ id, label, name, onChange, value }) => {
         onChange={onChange}
         value={value}
       />
+      {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 };

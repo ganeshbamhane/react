@@ -49,9 +49,9 @@ export default function Courses({ courses, loadCourses, deleteCourse }) {
       </center>
     </>
   );
-
-  Courses.propTypes = {
-    courses: PropTypes.arrayOf(course).isRequired,
-    loadCourses: PropTypes.func.isRequired
-  };
 }
+
+Courses.propTypes = {
+  courses: PropTypes.arrayOf(course).isRequired,
+  loadCourses: PropTypes.func.isRequired
+};
