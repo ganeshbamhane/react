@@ -11,7 +11,7 @@ function ManageCourse({ courses, loadCourses, match }) {
     authorId: null,
     category: ""
   });
-
+  const [errors, setErrors] = useState({});
   const [redirectToCoursesPage, setRedirectToCoursesPage] = useState(false);
 
   //componentDidMount() replace to useEffect in function
@@ -47,8 +47,19 @@ function ManageCourse({ courses, loadCourses, match }) {
   //     setState({ course });
   //   };
 
+  function isValid() {
+    const _errors = {};
+    if (!course.title) _errors.title = "Title Required";
+    if (!course.authorId) _errors.authorId = "Author Id Required";
+    if (!course.category) _errors.category = "Category Required";
+
+    setErrors(_errors);
+    return Object.keys(_errors).length === 0;
+  }
+
   function handleSubmit(event) {
     event.preventDefault(); // hey browser, don't post back.
+    if (!isValid()) return;
     saveCourse(course).then(() => {
       loadCourses();
       setRedirectToCoursesPage(true);
@@ -68,6 +79,7 @@ function ManageCourse({ courses, loadCourses, match }) {
             name="title"
             onChange={handleChange}
             value={course.title}
+            error={errors.title}
           />
 
           <TextInput
@@ -76,6 +88,7 @@ function ManageCourse({ courses, loadCourses, match }) {
             name="authorId"
             onChange={handleChange}
             value={course.authorId || ""}
+            error={errors.authorId}
           />
 
           <TextInput
@@ -84,6 +97,7 @@ function ManageCourse({ courses, loadCourses, match }) {
             name="category"
             onChange={handleChange}
             value={course.category}
+            error={errors.category}
           />
           <br />
           <input type="submit" className="btn btn-primary" value="Save" />
