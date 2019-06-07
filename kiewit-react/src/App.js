@@ -7,9 +7,14 @@ import ManageCourse from "./ManageCourse";
 import * as CourseApi from "./api/courseApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserContext from "./utils/UserContext";
 
 const App = () => {
   const [courses, setCourses] = useState([]);
+  const [user, setUser] = useState({
+    id: 1,
+    firstName: "First Name"
+  });
 
   function loadCourses() {
     return CourseApi.getCourses()
@@ -28,7 +33,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <UserContext.Provider value={user}>
       <ToastContainer />
       <Nav />
       <Switch>
@@ -56,7 +61,7 @@ const App = () => {
         />
         )} />
       </Switch>
-    </>
+    </UserContext.Provider>
   );
 };
 
